@@ -1,0 +1,317 @@
+import { useState } from "react";
+import { BookOpen, LayoutDashboard, GraduationCap, User, Menu, X } from "lucide-react";
+import { CourseCatalog } from "./components/CourseCatalog";
+import { CourseDetail, Module } from "./components/CourseDetail";
+import { Dashboard } from "./components/Dashboard";
+import { LessonViewer } from "./components/LessonViewer";
+import { Course } from "./components/CourseCard";
+import { toast } from "sonner";
+import { Toaster } from "sonner";
+
+type View = "catalog" | "dashboard" | "course-detail" | "lesson";
+
+function App() {
+  const [currentView, setCurrentView] = useState<View>("dashboard");
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Mock data
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: "1",
+      title: "Complete Web Development Bootcamp",
+      description: "Learn HTML, CSS, JavaScript, React, Node.js and more. Build real-world projects and become a full-stack developer.",
+      instructor: "Sarah Johnson",
+      duration: "40 hours",
+      students: 15420,
+      rating: 4.8,
+      image: "https://images.unsplash.com/photo-1675495277087-10598bf7bcd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9ncmFtbWluZyUyMGNvZGUlMjBsYXB0b3B8ZW58MXx8fHwxNzY1OTgzMDM4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Beginner",
+      category: "Development",
+      enrolled: true,
+      progress: 35,
+    },
+    {
+      id: "2",
+      title: "Digital Marketing Masterclass",
+      description: "Master SEO, social media marketing, email marketing, and advertising. Grow your business online.",
+      instructor: "Michael Chen",
+      duration: "25 hours",
+      students: 12850,
+      rating: 4.7,
+      image: "https://images.unsplash.com/photo-1709281847802-9aef10b6d4bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJrZXRpbmclMjBkaWdpdGFsJTIwc3RyYXRlZ3l8ZW58MXx8fHwxNzY2MDA1NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Intermediate",
+      category: "Marketing",
+      enrolled: true,
+      progress: 60,
+    },
+    {
+      id: "3",
+      title: "Data Science & Machine Learning",
+      description: "Learn Python, data analysis, machine learning algorithms, and build predictive models.",
+      instructor: "Dr. Emily Rodriguez",
+      duration: "50 hours",
+      students: 18300,
+      rating: 4.9,
+      image: "https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwYW5hbHl0aWNzJTIwY2hhcnRzfGVufDF8fHx8MTc2NTk4NDU2NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Advanced",
+      category: "Data Science",
+      enrolled: false,
+    },
+    {
+      id: "4",
+      title: "UI/UX Design Fundamentals",
+      description: "Master design principles, user research, wireframing, prototyping, and create stunning interfaces.",
+      instructor: "Alex Martinez",
+      duration: "30 hours",
+      students: 9500,
+      rating: 4.6,
+      image: "https://images.unsplash.com/photo-1763191213523-1489179a1088?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ24lMjBjcmVhdGl2ZSUyMHdvcmtzcGFjZXxlbnwxfHx8fDE3NjU5NDg1MTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Beginner",
+      category: "Design",
+      enrolled: true,
+      progress: 15,
+    },
+    {
+      id: "5",
+      title: "Business Strategy & Leadership",
+      description: "Develop strategic thinking, leadership skills, and learn to drive business growth.",
+      instructor: "David Thompson",
+      duration: "20 hours",
+      students: 7200,
+      rating: 4.5,
+      image: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1lZXRpbmclMjBwcm9mZXNzaW9uYWx8ZW58MXx8fHwxNzY1OTU0ODY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Intermediate",
+      category: "Business",
+      enrolled: false,
+    },
+    {
+      id: "6",
+      title: "Introduction to Programming",
+      description: "Start your coding journey with programming fundamentals, logic, and problem-solving.",
+      instructor: "Jessica Lee",
+      duration: "15 hours",
+      students: 22100,
+      rating: 4.7,
+      image: "https://images.unsplash.com/photo-1759984782106-4b56d0aa05b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZyUyMHN0dWRlbnR8ZW58MXx8fHwxNzY2MDM5NTIzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      level: "Beginner",
+      category: "Development",
+      enrolled: false,
+    },
+  ]);
+
+  const [courseModules] = useState<Record<string, Module[]>>({
+    "1": [
+      {
+        id: "m1",
+        title: "Getting Started",
+        lessons: [
+          { id: "l1", title: "Welcome to the Course", duration: "5 min", type: "video", completed: true, locked: false },
+          { id: "l2", title: "Setting Up Your Environment", duration: "15 min", type: "video", completed: true, locked: false },
+          { id: "l3", title: "Course Resources", duration: "5 min", type: "reading", completed: false, locked: false },
+        ],
+      },
+      {
+        id: "m2",
+        title: "HTML & CSS Basics",
+        lessons: [
+          { id: "l4", title: "HTML Fundamentals", duration: "30 min", type: "video", completed: false, locked: false },
+          { id: "l5", title: "CSS Styling", duration: "45 min", type: "video", completed: false, locked: false },
+          { id: "l6", title: "Responsive Design", duration: "40 min", type: "video", completed: false, locked: false },
+          { id: "l7", title: "HTML & CSS Quiz", duration: "15 min", type: "quiz", completed: false, locked: false },
+        ],
+      },
+      {
+        id: "m3",
+        title: "JavaScript Essentials",
+        lessons: [
+          { id: "l8", title: "JavaScript Basics", duration: "50 min", type: "video", completed: false, locked: true },
+          { id: "l9", title: "Functions & Objects", duration: "45 min", type: "video", completed: false, locked: true },
+          { id: "l10", title: "DOM Manipulation", duration: "40 min", type: "video", completed: false, locked: true },
+        ],
+      },
+    ],
+    "2": [
+      {
+        id: "m1",
+        title: "Digital Marketing Overview",
+        lessons: [
+          { id: "l1", title: "Introduction to Digital Marketing", duration: "20 min", type: "video", completed: true, locked: false },
+          { id: "l2", title: "Marketing Strategy Fundamentals", duration: "30 min", type: "video", completed: true, locked: false },
+        ],
+      },
+    ],
+    "4": [
+      {
+        id: "m1",
+        title: "Design Principles",
+        lessons: [
+          { id: "l1", title: "Introduction to UI/UX", duration: "15 min", type: "video", completed: true, locked: false },
+          { id: "l2", title: "Design Thinking Process", duration: "25 min", type: "video", completed: false, locked: false },
+        ],
+      },
+    ],
+  });
+
+  const enrolledCourses = courses.filter(c => c.enrolled);
+  const selectedCourse = selectedCourseId ? courses.find(c => c.id === selectedCourseId) : null;
+  const selectedModules = selectedCourseId ? courseModules[selectedCourseId] || [] : [];
+
+  const handleCourseSelect = (courseId: string) => {
+    setSelectedCourseId(courseId);
+    setCurrentView("course-detail");
+    setMobileMenuOpen(false);
+  };
+
+  const handleEnroll = (courseId: string) => {
+    setCourses(courses.map(c =>
+      c.id === courseId ? { ...c, enrolled: true, progress: 0 } : c
+    ));
+    toast.success("Successfully enrolled in the course!");
+  };
+
+  const handleLessonSelect = (courseId: string, lessonId: string) => {
+    setSelectedCourseId(courseId);
+    setSelectedLessonId(lessonId);
+    setCurrentView("lesson");
+  };
+
+  const handleLessonComplete = (lessonId: string) => {
+    toast.success("Lesson marked as complete!");
+  };
+
+  const handleNextLesson = () => {
+    toast.info("Moving to next lesson...");
+  };
+
+  const handleNavigation = (view: View) => {
+    setCurrentView(view);
+    setMobileMenuOpen(false);
+  };
+
+  const selectedLesson = selectedModules
+    .flatMap(m => m.lessons)
+    .find(l => l.id === selectedLessonId);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Toaster position="top-right" />
+
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-8 h-8 text-blue-600" />
+              <span className="text-xl">LearnHub</span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <button
+                onClick={() => handleNavigation("dashboard")}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+                  currentView === "dashboard" ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                <LayoutDashboard className="w-5 h-5" />
+                Dashboard
+              </button>
+              <button
+                onClick={() => handleNavigation("catalog")}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+                  currentView === "catalog" ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                <BookOpen className="w-5 h-5" />
+                Courses
+              </button>
+              <button className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                <User className="w-5 h-5" />
+                Profile
+              </button>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <nav className="md:hidden py-4 border-t border-gray-200">
+              <div className="space-y-2">
+                <button
+                  onClick={() => handleNavigation("dashboard")}
+                  className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
+                    currentView === "dashboard" ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  <LayoutDashboard className="w-5 h-5" />
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => handleNavigation("catalog")}
+                  className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
+                    currentView === "catalog" ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  <BookOpen className="w-5 h-5" />
+                  Courses
+                </button>
+                <button className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+                  <User className="w-5 h-5" />
+                  Profile
+                </button>
+              </div>
+            </nav>
+          )}
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {currentView === "dashboard" && (
+          <Dashboard
+            enrolledCourses={enrolledCourses}
+            onCourseSelect={handleCourseSelect}
+          />
+        )}
+
+        {currentView === "catalog" && (
+          <CourseCatalog
+            courses={courses}
+            onCourseSelect={handleCourseSelect}
+          />
+        )}
+
+        {currentView === "course-detail" && selectedCourse && (
+          <CourseDetail
+            course={selectedCourse}
+            modules={selectedModules}
+            onBack={() => setCurrentView("catalog")}
+            onEnroll={handleEnroll}
+            onLessonSelect={handleLessonSelect}
+          />
+        )}
+
+        {currentView === "lesson" && selectedCourse && selectedLesson && (
+          <LessonViewer
+            course={selectedCourse}
+            lesson={selectedLesson}
+            modules={selectedModules}
+            onBack={() => setCurrentView("course-detail")}
+            onComplete={handleLessonComplete}
+            onNext={handleNextLesson}
+          />
+        )}
+      </main>
+    </div>
+  );
+}
+
