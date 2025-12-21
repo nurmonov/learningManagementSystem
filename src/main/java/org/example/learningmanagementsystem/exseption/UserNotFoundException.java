@@ -1,15 +1,13 @@
 package org.example.learningmanagementsystem.exseption;
 
 
-public class UserNotFoundException extends RuntimeException {
+public class UserNotFoundException extends BaseException {
 
-    // Konstruktor
     public UserNotFoundException(String message) {
-        super(message);
+        super(message, "USER_NOT_FOUND");
     }
 
     public UserNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+        super(message, "USER_NOT_FOUND", cause);
     }
 }
-

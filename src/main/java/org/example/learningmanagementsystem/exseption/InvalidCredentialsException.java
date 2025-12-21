@@ -1,15 +1,13 @@
 package org.example.learningmanagementsystem.exseption;
 
 
-public class InvalidCredentialsException extends RuntimeException {
+public class InvalidCredentialsException extends BaseException {
 
-    // Konstruktor
     public InvalidCredentialsException(String message) {
-        super(message);
+        super(message, "INVALID_CREDENTIALS");
     }
 
     public InvalidCredentialsException(String message, Throwable cause) {
-        super(message, cause);
+        super(message, "INVALID_CREDENTIALS", cause);
     }
 }
-
