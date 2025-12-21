@@ -63,10 +63,13 @@ public class AuthService {
                     });
 
             // Parolni tekshirish
-            if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-                logger.warn("Invalid password for user: {}", request.getUsernameOrEmail());
+            if (!passwordEncoder.matches(
+                    request.getPassword(),   // plain
+                    user.getPasswordHash()   // DB hash
+            )) {
                 throw new RuntimeException("Invalid password");
             }
+
 
             // JWT token yaratish
             String token = jwtService.generateToken(user);
@@ -100,7 +103,7 @@ public class AuthService {
             // JWT token yaratish
             String token = jwtService.generateToken(user);
             logger.info("User {} logged in successfully", user.getUsername());
-
+            System.out.println(token);
             // Javobni yaratish
             LoginResponseDTO response = new LoginResponseDTO();
             response.setToken(token);
