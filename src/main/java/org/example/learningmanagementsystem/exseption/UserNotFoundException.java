@@ -1,6 +1,8 @@
 package org.example.learningmanagementsystem.exseption;
 
 
+
+
 public class UserNotFoundException extends BaseException {
 
     public UserNotFoundException(String message) {
@@ -11,3 +13,4 @@ public class UserNotFoundException extends BaseException {
         super(message, "USER_NOT_FOUND", cause);
     }
 }
+

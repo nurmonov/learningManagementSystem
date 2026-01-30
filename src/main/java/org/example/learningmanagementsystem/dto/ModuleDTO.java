@@ -8,5 +8,6 @@ import java.util.List;
 public class ModuleDTO {
     private Integer id;
     private String title;
+
     private List<LessonDTO> lessons;
 }

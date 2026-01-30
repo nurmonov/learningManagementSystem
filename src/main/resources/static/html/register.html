@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish - LMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Bosh sahifa
+        </a>
+        <div class="auth-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>LMS</span>
+        </div>
+    </div>
+
+    <div class="auth-card">
+        <h1 class="auth-title">Ro'yxatdan o'tish</h1>
+        <p class="auth-subtitle">Yangi hisob yarating va o'rganishni boshlang</p>
+
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user"></i> Foydalanuvchi nomi *
+                </label>
+                <input type="text" id="username" name="username"
+                       placeholder="username" required>
+                <div class="error-message" id="usernameError"></div>
+                <div class="form-hint">Kamida 3 ta belgi</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email manzil *
+                </label>
+                <input type="email" id="email" name="email"
+                       placeholder="email@example.com" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Parol *
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password"
+                                   placeholder="********" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                        <div class="form-hint">Kamida 6 ta belgi</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="confirmPassword">
+                            <i class="fas fa-lock"></i> Parolni tasdiqlash *
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                   placeholder="********" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="terms" required>
+                    <span>
+                            Men
+                            <a href="#" class="text-link">foydalanish shartlari</a>
+                            va
+                            <a href="#" class="text-link">maxfiylik siyosati</a>
+                            bilan tanishdim va roziman
+                        </span>
+                </label>
+                <div class="error-message" id="termsError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="registerBtn">
+                <span class="btn-text">Ro'yxatdan o'tish</span>
+                <span class="btn-spinner" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+            </button>
+
+            <div class="alert" id="registerAlert" style="display: none;"></div>
+        </form>
+
+        <div class="auth-divider">
+            <span>Allaqachon hisobingiz bormi?</span>
+        </div>
+
+        <a href="login.html" class="btn btn-outline btn-block">
+            <i class="fas fa-sign-in-alt"></i> Tizimga kirish
+        </a>
+
+        <div class="auth-footer">
+            <p>
+                <a href="index.html" class="auth-link">
+                    <i class="fas fa-home"></i> Bosh sahifaga qaytish
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="auth-features">
+        <div class="feature">
+            <i class="fas fa-rocket"></i>
+            <h3>Tezkor Boshlash</h3>
+            <p>Ro'yxatdan o'tgach darhol o'rganishni boshlang</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-gift"></i>
+            <h3>Bepul Kurslar</h3>
+            <p>Birinchi kursingiz bepul</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-comments"></i>
+            <h3>Hamkorlik</h3>
+            <p>O'qituvchilar va talabalar bilan bog'laning</p>
+        </div>
+    </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

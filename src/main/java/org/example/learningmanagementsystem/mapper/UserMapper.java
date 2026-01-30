@@ -1,6 +1,7 @@
 package org.example.learningmanagementsystem.mapper;
 
 
+import org.example.learningmanagementsystem.dto.UserCreateDTO;
 import org.example.learningmanagementsystem.dto.UserDTO;
 import org.example.learningmanagementsystem.dto.UserProfileDTO;
 import org.example.learningmanagementsystem.entity.User;
@@ -16,4 +17,6 @@ public interface UserMapper {
     UserProfileDTO toProfileDto(User user);
 
     User toEntity(UserDTO dto);
+
+    User toEntityCreate(UserCreateDTO dto);
 }

@@ -6,9 +6,9 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.8</version>
-        <relativePath/>
+        <version>3.2.5</version>
     </parent>
+
 
     <groupId>org.example</groupId>
     <artifactId>learningManagementSystem</artifactId>
@@ -43,8 +43,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
+
 
         <!-- Testing Dependencies -->
         <dependency>
@@ -92,11 +94,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
         </dependency>
 
-        <!-- SLF4J API for logging -->
+
+
     </dependencies>
 
     <build>

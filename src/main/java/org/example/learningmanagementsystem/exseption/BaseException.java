@@ -1,5 +1,6 @@
 package org.example.learningmanagementsystem.exseption;
 
+
 public abstract class BaseException extends RuntimeException {
 
     private final String errorCode;

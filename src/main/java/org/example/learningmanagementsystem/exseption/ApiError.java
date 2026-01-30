@@ -2,6 +2,7 @@ package org.example.learningmanagementsystem.exseption;
 
 
 
+
 import lombok.Data;
 
 @Data

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LMS</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Bosh sahifa</span>
+            </a>
+            <a href="courses.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Kurslar</span>
+            </a>
+            <a href="my-courses.html" class="nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Mening kurslarim</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Sozlamalar</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button onclick="authManager.logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Chiqish</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-left">
+                <h1>Dashboard</h1>
+                <p class="welcome-text">Xush kelibsiz, <span id="userName">Foydalanuvchi</span>!</p>
+            </div>
+
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Kurslarni qidirish...">
+                </div>
+
+                <div class="user-menu">
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff"
+                             alt="Profile" class="user-avatar" id="userAvatar">
+                        <span id="userFullName">Foydalanuvchi</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Sozlamalar</a>
+                        <div class="divider"></div>
+                        <a href="#" onclick="authManager.logout()"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <h2 class="section-title">Statistika</h2>
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="courseCount">0</h3>
+                        <p>Faol Kurslar</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="hoursStudied">0</h3>
+                        <p>O'qilgan Soat</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completedCourses">0</h3>
+                        <p>Tugatilgan Kurslar</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="achievements">0</h3>
+                        <p>Yutuqlar</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Courses -->
+        <section class="courses-section">
+            <div class="section-header">
+                <h2 class="section-title">Oxirgi Kurslar</h2>
+                <a href="my-courses.html" class="view-all">Hammasini ko'rish</a>
+            </div>
+
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Kurslar bu yerda yuklanadi -->
+                <div class="loading-courses">
+                    <div class="spinner"></div>
+                    <p>Kurslar yuklanmoqda...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Chart -->
+        <section class="progress-section">
+            <div class="section-header">
+                <h2 class="section-title">Progress</h2>
+            </div>
+            <div class="progress-chart">
+                <canvas id="progressChart"></canvas>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

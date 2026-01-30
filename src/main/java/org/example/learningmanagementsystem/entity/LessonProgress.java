@@ -14,8 +14,13 @@ import java.time.LocalDateTime;
 @Table(name = "lesson_progress",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","lesson_id"}))
 @Getter @Setter
+@NoArgsConstructor
 public class LessonProgress {
 
+    public LessonProgress(User user, Lesson lesson) {
+        this.user = user;
+        this.lesson = lesson;
+    }
 
     @Id
     @GeneratedValue

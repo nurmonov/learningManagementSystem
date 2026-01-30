@@ -21,7 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;  // id maydoni
 
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private String username;
 
     @Column(unique = true, nullable = false)
@@ -42,47 +42,3 @@ public class User {
         this.createdAt = Instant.now();
     }
 }
-
-//
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Entity
-//@Table(name = "users")
-//@Getter
-//@Setter
-//public class User {
-//
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-//
-//    @Column(unique = true, nullable = false)
-//    private String username;
-//
-//
-//    @Column(unique = true, nullable = false)
-//    private String email;
-//
-//
-//    @Column(nullable = false)
-//    private String passwordHash;
-//
-//
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Role role;
-//
-//
-//    @Column(nullable = false, updatable = false)
-//    private Instant createdAt;
-//
-//
-//    @PrePersist
-//    void onCreate() {
-//        this.createdAt = Instant.now();
-//    }
-//
-//
-//
-//}

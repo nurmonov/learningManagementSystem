@@ -40,4 +40,3 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, status);
     }
 }
-

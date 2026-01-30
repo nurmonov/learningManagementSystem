@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Learning Management System</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>LMS Platform</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Bosh Sahifa</a>
+            <a href="#features">Xususiyatlar</a>
+            <a href="#about">Biz haqimizda</a>
+            <a href="#contact">Aloqa</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn btn-outline">Kirish</a>
+            <a href="register.html" class="btn btn-primary">Ro'yxatdan o'tish</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="hero">
+        <div class="hero-content">
+            <h1>O'qishni <span class="highlight">Yangi</span> Usulda Boshlang</h1>
+            <p>Professional kurslar, interaktiv darslar va tajribali o'qituvchilar bilan bilimingizni oshiring</p>
+            <div class="hero-buttons">
+                <a href="register.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-rocket"></i> Boshlash
+                </a>
+                <a href="login.html" class="btn btn-outline btn-large">
+                    <i class="fas fa-sign-in-alt"></i> Tizimga Kirish
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                 alt="Learning Platform">
+        </div>
+    </main>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Nega Bizni Tanlashadi?</h2>
+            <p>Platformamizning afzalliklari</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Online O'qish</h3>
+                <p>Har qanday joydan, har qanday vaqtda o'qing</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>Tajribali Mentorlar</h3>
+                <p>Sanoq mutaxassislari tomonidan tayyorlangan kurslar</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Sertifikat</h3>
+                <p>Kursni tugatgandan so'ng sertifikat oling</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Hoziroq Boshlang!</h2>
+            <p>Bepul hisob oching va o'qishni boshlang</p>
+            <div class="cta-buttons">
+                <a href="register.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-user-plus"></i> Bepul Ro'yxatdan o'tish
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LMS Platform</span>
+            </div>
+            <div class="footer-links">
+                <a href="#privacy">Maxfiylik</a>
+                <a href="#terms">Foydalanish shartlari</a>
+                <a href="#contact">Aloqa</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LMS Platform. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+</div>
+
+<script src="js/utils.js"></script>
+<script>
+    // Agar foydalanuvchi tizimga kirgan bo'lsa, dashboard'ga yo'naltiramiz
+    const token = localStorage.getItem('token');
+    if (token) {
+        window.location.href = 'dashboard.html';
+    }
+</script>
+</body>
+</html>

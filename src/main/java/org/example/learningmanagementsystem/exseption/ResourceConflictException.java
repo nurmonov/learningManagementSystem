@@ -1,6 +1,7 @@
 package org.example.learningmanagementsystem.exseption;
 
 
+
 public class ResourceConflictException extends BaseException {
 
     public ResourceConflictException(String message) {

@@ -2,10 +2,14 @@ package org.example.learningmanagementsystem.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.learningmanagementsystem.dto.UserCreateDTO;
 import org.example.learningmanagementsystem.dto.UserDTO;
 import org.example.learningmanagementsystem.entity.User;
+import org.example.learningmanagementsystem.entity.roles.Role;
 import org.example.learningmanagementsystem.mapper.UserMapper;
 import org.example.learningmanagementsystem.repo.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +23,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
 
 
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream()
+        return users
+                .stream()
                 .map(userMapper::toDto)
                 .toList();
     }
@@ -35,21 +41,24 @@ public class UserService {
             return userMapper.toDto(user.get());
 
         }else {
-            throw new RuntimeException("Category not found with id: " + id);
+            throw new RuntimeException("User not found with id: " + id);
         }
     }
 
 
-    public UserDTO createUser(UserDTO userDTO) {
-        // Admin foydalanuvchi uchun default parol
-        String plainPassword = "123"; // admin foydalanuvchisi uchun parol
+    public UserDTO createUser(UserCreateDTO userDTO) {
 
-        User user = userMapper.toEntity(userDTO);
+        String plainPassword = "123";
+        Role rl= Role.valueOf("USER");
 
-        // Parolni shifrlash
+        User user = userMapper.toEntityCreate(userDTO);
+
+
         String hashedPassword = passwordEncoder.encode(plainPassword);
 
         user.setPasswordHash(hashedPassword);
+
+        user.setRole(rl);
 
         userRepository.save(user);
 
@@ -57,9 +66,9 @@ public class UserService {
     }
 
 
-    //bu faqat 1 chi kirishida ishlaydi
+
     public UserDTO updatePassword(Integer userId, String newPassword) {
-        // Foydalanuvchini id orqali olish
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found: " + userId));
 
@@ -77,44 +86,49 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    public UserDTO changePassword(Integer userId, String oldPassword, String newPassword) {
+    public UserDTO changePassword(String oldPassword, String newPassword) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String token = (String) auth.getCredentials();
+        Integer userId = jwtService.getUserIdFromToken(token); // endi null emas
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Eski parolni tekshirish
         if (!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
-            throw new RuntimeException("Old password does not match.");
+            throw new RuntimeException("Old password does not match");
         }
 
-        // Yangi parolni shifrlash
-        String hashedPassword = passwordEncoder.encode(newPassword);
-
-        user.setPasswordHash(hashedPassword);
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
         return userMapper.toDto(user);
     }
+
 
 
 
     public UserDTO updateUser( UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        user=userMapper.toEntity(userDTO);
-        userRepository.save(user);
-        return userMapper.toDto(user);
-    }
-
-
-
-    public UserDTO deleteUser(Integer userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            userRepository.delete(user.get());
-            return userMapper.toDto(user.get());
+        if (userDTO.getEmail() != null) {
+            user.setEmail(userDTO.getEmail());
         }
-        throw new RuntimeException("User not found with id: " + userId);
+        if (userDTO.getUsername() != null) {
+            user.setUsername(userDTO.getUsername());
+        }
+        User saved = userRepository.save(user);
+        return userMapper.toDto(saved);
     }
+
+
+
+    public void deleteUser(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        userRepository.delete(user);
+    }
+
 
 
 
