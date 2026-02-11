@@ -6,9 +6,7 @@ import org.example.learningmanagementsystem.entity.Module;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-import java.util.List;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {LessonMapper.class})
 public interface ModuleMapper {
 
     ModuleDTO toDto(Module module); // <-- har bir element uchun

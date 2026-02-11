@@ -10,6 +10,7 @@ import org.example.learningmanagementsystem.dto.RegisterRequestDTO;
 import org.example.learningmanagementsystem.entity.RefreshToken;
 import org.example.learningmanagementsystem.entity.User;
 import org.example.learningmanagementsystem.entity.roles.Role;
+import org.example.learningmanagementsystem.filter.JwtService;
 import org.example.learningmanagementsystem.repo.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

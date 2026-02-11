@@ -1,4 +1,4 @@
-package org.example.learningmanagementsystem.service;
+package org.example.learningmanagementsystem.filter;
 
 
 import io.jsonwebtoken.Claims;

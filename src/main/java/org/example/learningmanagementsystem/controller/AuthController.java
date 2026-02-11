@@ -12,11 +12,13 @@ import org.example.learningmanagementsystem.entity.RefreshToken;
 import org.example.learningmanagementsystem.entity.User;
 import org.example.learningmanagementsystem.repo.UserRepository;
 import org.example.learningmanagementsystem.service.AuthService;
-import org.example.learningmanagementsystem.service.JwtService;
+import org.example.learningmanagementsystem.filter.JwtService;
 import org.example.learningmanagementsystem.service.RefreshTokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -86,6 +88,11 @@ public class AuthController {
         response.addCookie(cookie);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/test")
+    public Map<String, String> test() {
+        return Map.of("status", "OK");
     }
 
 

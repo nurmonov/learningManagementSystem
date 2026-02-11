@@ -6,6 +6,7 @@ import org.example.learningmanagementsystem.dto.UserCreateDTO;
 import org.example.learningmanagementsystem.dto.UserDTO;
 import org.example.learningmanagementsystem.entity.User;
 import org.example.learningmanagementsystem.entity.roles.Role;
+import org.example.learningmanagementsystem.filter.JwtService;
 import org.example.learningmanagementsystem.mapper.UserMapper;
 import org.example.learningmanagementsystem.repo.UserRepository;
 import org.springframework.security.core.Authentication;
